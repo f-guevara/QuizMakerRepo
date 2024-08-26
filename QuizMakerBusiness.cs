@@ -3,27 +3,22 @@ using System.Collections.Generic;
 
 namespace QuizMaker
 {
-    public static class QuizMakerBusiness
+    static class QuizMakerBusiness
     {
-        // Constants
-        public const int MIN_ANSWER_INDEX = 0;
-        public const int MAX_ANSWER_INDEX = 3;
-
-        // Method to check if the user's answer is correct
-        public static bool IsAnswerCorrect(QuizQuestion question, int userAnswerIndex)
+        public static bool IsAnswerCorrect(Question question, int userAnswerIndex)
         {
             return question.CorrectAnswerIndex == userAnswerIndex;
         }
 
-        // Method to generate a list of sample questions (for testing)
-        public static List<QuizQuestion> GenerateSampleQuestions()
+        public static List<Question> GenerateSampleQuestions()
         {
-            return new List<QuizQuestion>
+            return new List<Question>
             {
-                new QuizQuestion("What color is the sky?", new List<string> { "Blue", "Red", "Green", "Yellow" }, 0),
-                new QuizQuestion("What is the capital of France?", new List<string> { "Berlin", "Madrid", "Paris", "Rome" }, 2),
-                new QuizQuestion("Which number is even?", new List<string> { "1", "3", "5", "6" }, 3)
+                new Question("Color of the sky?", new List<string> { "Blue", "Red", "Black" }, 0),
+                new Question("Color of the forest?", new List<string> { "Red", "Green", "Blue" }, 1),
+                new Question("Capital of USA?", new List<string> { "NY", "CA", "Washington" }, 2)
             };
         }
     }
 }
+
