@@ -91,10 +91,13 @@ namespace QuizMaker
 
         private static List<string> HandleAnswers(out int correctAnswerIndex)
         {
-            List<string> answers = new List<string>();
             correctAnswerIndex = -1;
 
-            for (int i = 0; i < 3; i++)  // Assume 3 answers for simplicity
+            int numberOfAnswers = GetNumberOfAnswers(); // Ask user for the number of possible answers
+
+            List<string> answers = new List<string>();
+
+            for (int i = 0; i < numberOfAnswers; i++)
             {
                 Console.Write($"Enter answer {i + 1}: ");
                 string answer = Console.ReadLine();
@@ -115,6 +118,37 @@ namespace QuizMaker
             }
 
             return answers;
+        }
+
+        private static int GetNumberOfAnswers()
+        {
+            const int MIN_ANSWERS = 2;
+            const int MAX_ANSWERS = 10; // Setting an upper limit for the number of answers
+            int numberOfAnswers = 0;
+
+            while (true)
+            {
+                Console.Write($"Enter the number of possible answers (between {MIN_ANSWERS} and {MAX_ANSWERS}): ");
+                string input = Console.ReadLine();
+
+                if (int.TryParse(input, out numberOfAnswers))
+                {
+                    if (numberOfAnswers >= MIN_ANSWERS && numberOfAnswers <= MAX_ANSWERS)
+                    {
+                        break; // Valid input, break the loop
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Please enter a number between {MIN_ANSWERS} and {MAX_ANSWERS}.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a numeric value.");
+                }
+            }
+
+            return numberOfAnswers;
         }
 
         private static bool ConfirmCorrectAnswer(int answerIndex)
