@@ -24,7 +24,7 @@ namespace QuizMaker
                 {
                     return choice;
                 }
-                else
+              
                 {
                     ShowInvalidOptionMessage();
                 }
