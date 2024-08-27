@@ -6,7 +6,9 @@
         {
             while (true)
             {
-                int choice = ConsoleUI.ShowMainMenu();
+                ConsoleUI.DisplayMainMenu();
+
+                int choice = ConsoleUI.GetUserMenuChoice();
 
                 switch (choice)
                 {

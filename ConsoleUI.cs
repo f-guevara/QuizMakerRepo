@@ -9,14 +9,18 @@ namespace QuizMaker
         public const int MENU_OPTION_TAKE_QUIZ = 2;
         public const int MENU_OPTION_QUIT = 3;
 
-        public static int ShowMainMenu()
+        public static void DisplayMainMenu()
+        {
+            Console.WriteLine("Main Menu:");
+            Console.WriteLine($"{MENU_OPTION_ADD_QUESTIONS}. Enter New Questions");
+            Console.WriteLine($"{MENU_OPTION_TAKE_QUIZ}. Take the Quiz");
+            Console.WriteLine($"{MENU_OPTION_QUIT}. Quit");
+        }
+
+        public static int GetUserMenuChoice()
         {
             while (true)
             {
-                Console.WriteLine("Main Menu:");
-                Console.WriteLine($"{MENU_OPTION_ADD_QUESTIONS}. Enter New Questions");
-                Console.WriteLine($"{MENU_OPTION_TAKE_QUIZ}. Take the Quiz");
-                Console.WriteLine($"{MENU_OPTION_QUIT}. Quit");
                 Console.Write("Choose an option: ");
 
                 if (int.TryParse(Console.ReadLine(), out int choice) &&
@@ -24,12 +28,13 @@ namespace QuizMaker
                 {
                     return choice;
                 }
-              
+                else
                 {
                     ShowInvalidOptionMessage();
                 }
             }
         }
+
 
         public static void ShowInvalidOptionMessage()
         {
