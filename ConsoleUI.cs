@@ -52,49 +52,14 @@ namespace QuizMaker
 
             while (true)
             {
-                Console.Write("Enter the question (or type 'done' to finish): ");
-                string questionText = Console.ReadLine();
-
-                if (questionText.ToLower() == "done")
+                string questionText = HandleQuestionText();
+                if (string.IsNullOrWhiteSpace(questionText))
                 {
+                    Console.WriteLine("No questions were added.");
                     break;
                 }
 
-                if (string.IsNullOrWhiteSpace(questionText))
-                {
-                    Console.WriteLine("Question cannot be empty. Please enter a valid question.");
-                    continue;
-                }
-
-                List<string> answers = new List<string>();
-                int correctAnswerIndex = -1;
-
-                for (int i = 0; i < 3; i++)  // Assume 3 answers for simplicity
-                {
-                    Console.Write($"Enter answer {i + 1}: ");
-                    string answer = Console.ReadLine();
-
-                    if (string.IsNullOrWhiteSpace(answer))
-                    {
-                        Console.WriteLine("Answer cannot be empty. Please enter a valid answer.");
-                        i--; // Repeat this iteration
-                        continue;
-                    }
-
-                    answers.Add(answer);
-
-                    if (correctAnswerIndex == -1)
-                    {
-                        Console.Write($"Is this the correct answer? (y/n): ");
-                        string isCorrect = Console.ReadLine().ToLower();
-
-                        if (isCorrect == "y")
-                        {
-                            correctAnswerIndex = i;
-                        }
-                    }
-                }
-
+                List<string> answers = HandleAnswers(out int correctAnswerIndex);
                 if (correctAnswerIndex == -1)
                 {
                     Console.WriteLine("No correct answer selected. Please try again.");
@@ -103,6 +68,12 @@ namespace QuizMaker
 
                 questions.Add(new Question(questionText, answers, correctAnswerIndex));
                 Console.WriteLine("Question added successfully!");
+
+                // Check if the user wants to add another question or exit
+                if (!AskIfContinue())
+                {
+                    break;
+                }
             }
 
             if (questions.Count > 0)
@@ -110,13 +81,58 @@ namespace QuizMaker
                 QuizDataHandler.SaveQuestions(questions);
                 Console.WriteLine($"{questions.Count} questions saved successfully.");
             }
-            else
-            {
-                Console.WriteLine("No questions were added.");
-            }
         }
 
-        public static int AskQuestion(Question question)
+        private static string HandleQuestionText()
+        {
+            Console.Write("Enter the question (or leave empty and press Enter to quit): ");
+            return Console.ReadLine();
+        }
+
+        private static List<string> HandleAnswers(out int correctAnswerIndex)
+        {
+            List<string> answers = new List<string>();
+            correctAnswerIndex = -1;
+
+            for (int i = 0; i < 3; i++)  // Assume 3 answers for simplicity
+            {
+                Console.Write($"Enter answer {i + 1}: ");
+                string answer = Console.ReadLine();
+
+                if (string.IsNullOrWhiteSpace(answer))
+                {
+                    Console.WriteLine("Answer cannot be empty. Please enter a valid answer.");
+                    i--; // Repeat this iteration
+                    continue;
+                }
+
+                answers.Add(answer);
+
+                if (correctAnswerIndex == -1 && ConfirmCorrectAnswer(i))
+                {
+                    correctAnswerIndex = i;
+                }
+            }
+
+            return answers;
+        }
+
+        private static bool ConfirmCorrectAnswer(int answerIndex)
+        {
+            Console.Write("Is this the correct answer? (y/n): ");
+            return Console.ReadLine().Trim().ToLower() == "y";
+        }
+
+        private static bool AskIfContinue()
+        {
+            Console.WriteLine("Enter next question or press ESC to quit.");
+            ConsoleKeyInfo keyInfo = Console.ReadKey(true);
+            return keyInfo.Key != ConsoleKey.Escape;
+        }
+    
+
+
+    public static int AskQuestion(Question question)
         {
             Console.WriteLine(question.QuestionText);
 
