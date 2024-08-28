@@ -8,7 +8,7 @@ namespace QuizMaker
         public const int MENU_OPTION_ADD_QUESTIONS = 1;
         public const int MENU_OPTION_TAKE_QUIZ = 2;
         public const int MENU_OPTION_QUIT = 3;
-        public const char THE_CORRECT_ANSWER = "y";
+        public const string THE_CORRECT_ANSWER = "y";
 
         public static void DisplayMainMenu()
         {
@@ -157,7 +157,7 @@ namespace QuizMaker
             return numberOfAnswers;
         }
 
-        private static bool ConfirmCorrectAnswer(int answerIndex)
+        private static bool ConfirmCorrectAnswer()
         {
             Console.Write($"Is this the correct answer? ({THE_CORRECT_ANSWER}/n): ");
             return Console.ReadLine().Trim().ToLower() == THE_CORRECT_ANSWER;
