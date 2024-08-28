@@ -5,17 +5,14 @@ namespace QuizMaker
 {
     static class ConsoleUI
     {
-        public const int MENU_OPTION_ADD_QUESTIONS = 1;
-        public const int MENU_OPTION_TAKE_QUIZ = 2;
-        public const int MENU_OPTION_QUIT = 3;
-        public const string THE_CORRECT_ANSWER = "y";
+        
 
         public static void DisplayMainMenu()
         {
             Console.WriteLine("Main Menu:");
-            Console.WriteLine($"{MENU_OPTION_ADD_QUESTIONS}. Enter New Questions");
-            Console.WriteLine($"{MENU_OPTION_TAKE_QUIZ}. Take the Quiz");
-            Console.WriteLine($"{MENU_OPTION_QUIT}. Quit");
+            Console.WriteLine($"{QuizConstants.MENU_OPTION_ADD_QUESTIONS}. Enter New Questions");
+            Console.WriteLine($"{QuizConstants.MENU_OPTION_TAKE_QUIZ}. Take the Quiz");
+            Console.WriteLine($"{QuizConstants.MENU_OPTION_QUIT}. Quit");
         }
 
         public static int GetUserMenuChoice()
@@ -25,7 +22,7 @@ namespace QuizMaker
                 Console.Write("Choose an option: ");
 
                 if (int.TryParse(Console.ReadLine(), out int choice) &&
-                    choice >= MENU_OPTION_ADD_QUESTIONS && choice <= MENU_OPTION_QUIT)
+                    choice >= QuizConstants.MENU_OPTION_ADD_QUESTIONS && choice <= QuizConstants.MENU_OPTION_QUIT)
                 {
                     return choice;
                 }
@@ -128,24 +125,23 @@ namespace QuizMaker
 
         private static int GetNumberOfAnswers()
         {
-            const int MIN_ANSWERS = 2;
-            const int MAX_ANSWERS = 10; // Setting an upper limit for the number of answers
+          
             int numberOfAnswers = 0;
 
             while (true)
             {
-                Console.Write($"Enter the number of possible answers (between {MIN_ANSWERS} and {MAX_ANSWERS}): ");
+                Console.Write($"Enter the number of possible answers (between {QuizConstants.MIN_ANSWERS} and {QuizConstants.MAX_ANSWERS}): ");
                 string input = Console.ReadLine();
 
                 if (int.TryParse(input, out numberOfAnswers))
                 {
-                    if (numberOfAnswers >= MIN_ANSWERS && numberOfAnswers <= MAX_ANSWERS)
+                    if (numberOfAnswers >= QuizConstants.MIN_ANSWERS && numberOfAnswers <= QuizConstants.MAX_ANSWERS)
                     {
                         break; // Valid input, break the loop
                     }
                     else
                     {
-                        Console.WriteLine($"Please enter a number between {MIN_ANSWERS} and {MAX_ANSWERS}.");
+                        Console.WriteLine($"Please enter a number between {QuizConstants.MIN_ANSWERS} and {QuizConstants.MAX_ANSWERS}.");
                     }
                 }
                 else
@@ -157,10 +153,10 @@ namespace QuizMaker
             return numberOfAnswers;
         }
 
-        private static bool ConfirmCorrectAnswer()
+        private static bool ConfirmCorrectAnswer(int answerIndex)
         {
-            Console.Write($"Is this the correct answer? ({THE_CORRECT_ANSWER}/n): ");
-            return Console.ReadLine().Trim().ToLower() == THE_CORRECT_ANSWER;
+            Console.Write($"Is this the correct answer? ({QuizConstants.THE_CORRECT_ANSWER}/n): ");
+            return Console.ReadLine().Trim().ToLower() == QuizConstants.THE_CORRECT_ANSWER;
         }
 
         private static bool AskIfContinue()

@@ -12,13 +12,13 @@
 
                 switch (choice)
                 {
-                    case ConsoleUI.MENU_OPTION_ADD_QUESTIONS:
+                    case QuizConstants.MENU_OPTION_ADD_QUESTIONS:
                         ConsoleUI.EnterQuestions();
                         break;
-                    case ConsoleUI.MENU_OPTION_TAKE_QUIZ:
+                    case QuizConstants.MENU_OPTION_TAKE_QUIZ:
                         TakeQuiz();
                         break;
-                    case ConsoleUI.MENU_OPTION_QUIT:
+                    case QuizConstants.MENU_OPTION_QUIT:
                         ConsoleUI.ShowExitMessage();
                         return;
                     default:
