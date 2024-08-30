@@ -95,9 +95,7 @@ namespace QuizMaker
         private static List<string> HandleAnswers(out int correctAnswerIndex)
         {
             correctAnswerIndex = -1;
-
             int numberOfAnswers = GetNumberOfAnswers(); // Ask user for the number of possible answers
-
             List<string> answers = new List<string>();
 
             for (int i = 0; i < numberOfAnswers; i++)
@@ -114,7 +112,8 @@ namespace QuizMaker
 
                 answers.Add(answer);
 
-                if (correctAnswerIndex == -1 && ConfirmCorrectAnswer(i))
+                // Adjusted this line to no longer pass an argument
+                if (correctAnswerIndex == -1 && ConfirmCorrectAnswer())
                 {
                     correctAnswerIndex = i;
                 }
@@ -122,6 +121,7 @@ namespace QuizMaker
 
             return answers;
         }
+
 
         private static int GetNumberOfAnswers()
         {
@@ -153,11 +153,12 @@ namespace QuizMaker
             return numberOfAnswers;
         }
 
-        private static bool ConfirmCorrectAnswer(int answerIndex)
+        private static bool ConfirmCorrectAnswer()
         {
             Console.Write($"Is this the correct answer? ({QuizConstants.THE_CORRECT_ANSWER}/n): ");
             return Console.ReadLine().Trim().ToLower() == QuizConstants.THE_CORRECT_ANSWER;
         }
+
 
         private static bool AskIfContinue()
         {
