@@ -19,6 +19,7 @@ namespace QuizMaker
                 new Question("Capital of USA?", new List<string> { "NY", "CA", "Washington" }, 2)
             };
         }
+
     }
 }
 

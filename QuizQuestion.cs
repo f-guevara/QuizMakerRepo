@@ -18,6 +18,19 @@ namespace QuizMaker
             Answers = answers;
             CorrectAnswerIndex = correctAnswerIndex;
         }
+
+        public void ShuffleAnswers()
+        {
+            // Store the correct answer text before shuffling
+            string correctAnswer = Answers[CorrectAnswerIndex];
+
+            // Shuffle the answers
+            Answers.Shuffle();
+
+            // Update CorrectAnswerIndex after shuffling
+            CorrectAnswerIndex = Answers.IndexOf(correctAnswer);
+        }
+
     }
 }
 

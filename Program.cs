@@ -37,10 +37,16 @@
                 return;
             }
 
+            // Shuffle the questions
+            questions.Shuffle();
+
             int correctAnswers = 0;
 
             foreach (var question in questions)
             {
+                // Shuffle the answers for each question before asking
+                question.ShuffleAnswers();
+
                 int userAnswerIndex = ConsoleUI.AskQuestion(question);
                 if (QuizMakerBusiness.IsAnswerCorrect(question, userAnswerIndex))
                 {
