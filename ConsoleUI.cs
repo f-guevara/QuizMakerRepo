@@ -210,21 +210,28 @@ namespace QuizMaker
             // Shuffle the questions
             questions.Shuffle();
 
+            int correctAnswers = CountCorrectAnswers(questions);
+
+            ConsoleUI.DisplayScore(correctAnswers, questions.Count);
+        }
+
+        // Method to count the correct answers
+        public static int CountCorrectAnswers(List<Question> questionList)
+        {
             int correctAnswers = 0;
 
-            foreach (var question in questions)
+            foreach (var question in questionList)
             {
-                // Shuffle the answers for each question before asking
                 question.ShuffleAnswers();
 
-                int userAnswerIndex = ConsoleUI.AskQuestion(question);
+                int userAnswerIndex = AskQuestion(question);
                 if (QuizMakerBusiness.IsAnswerCorrect(question, userAnswerIndex))
                 {
                     correctAnswers++;
                 }
             }
 
-            ConsoleUI.DisplayScore(correctAnswers, questions.Count);
+            return correctAnswers;
         }
     }
 }
